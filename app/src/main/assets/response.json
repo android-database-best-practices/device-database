@@ -1,0 +1,42 @@
+{
+  "manufacturers": [
+    {
+      "short_name": "Samsung",
+      "long_name": "Samsung Electronics",
+      "devices": [
+        {
+          "model": "Nexus S",
+          "nickname": "Crespo",
+          "display_size_inches": 4.0
+        },
+        {
+          "model": "Galaxy Nexus",
+          "nickname": "Toro",
+          "display_size_inches": 4.65
+        }
+      ]
+    },
+    {
+      "short_name": "LG",
+      "long_name": "LG Electronics",
+      "devices": [
+        {
+          "model": "Nexus 4",
+          "nickname": "Mako",
+          "display_size_inches": 4.7
+        }
+      ]
+    },
+    {
+      "short_name": "HTC",
+      "long_name": "HTC Corporation",
+      "devices": [
+        {
+          "model": "Nexus One",
+          "nickname": "Passion",
+          "display_size_inches": 3.7
+        }
+      ]
+    }
+  ]
+}

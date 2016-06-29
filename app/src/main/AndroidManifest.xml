@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright 2016 Adam Stroud
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="me.adamstroud.devicedatabase">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+
+    <permission
+        android:name="me.adamstroud.devicedatabase.provider.READ_DEVICES"
+        android:description="@string/permission_description_read_devices" />
+    <permission
+        android:name="me.adamstroud.devicedatabase.provider.WRITE_DEVICES"
+        android:description="@string/permission_description_write_devices" />
+
+    <application
+        android:name=".DeviceDatabaseApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <provider
+            android:name=".provider.DevicesProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:syncable="true"
+            android:readPermission="me.adamstroud.devicedatabase.provider.READ_DEVICES"
+            android:writePermission="me.adamstroud.devicedatabase.provider.WRITE_DEVICES" />
+
+        <activity
+            android:name=".device.DeviceListActivity"
+            android:label="@string/title_device_list"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".device.DeviceDetailActivity"
+            android:label="@string/title_device_detail"
+            android:parentActivityName=".device.DeviceListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".device.DeviceListActivity" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <!-- <data android:mimeType="vnd.android.cursor.item/vnd.me.adamstroud.devicedatabase.provider.manufacturer" /> -->
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".device.AddDeviceActivity"
+            android:label="@string/title_edit_device"
+            android:parentActivityName=".device.DeviceListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".device.DeviceListActivity" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <!-- <data android:mimeType="vnd.android.cursor.item/vnd.me.adamstroud.devicedatabase.provider.manufacturer" /> -->
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".manufacturer.ManufacturerListActivity"
+            android:label="@string/title_manufacturer_list"
+            android:parentActivityName=".device.DeviceDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".device.DeviceDetailActivity" />
+        </activity>
+        <activity
+            android:name=".manufacturer.AddManufacturerActivity"
+            android:label="@string/title_activity_add_manufacturer"
+            android:parentActivityName=".manufacturer.ManufacturerListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="me.adamstroud.devicedatabase.manufacturer.ManufacturerListActivity" />
+        </activity>
+
+        <service
+            android:name=".sync.AuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
+
+        <service
+            android:name=".sync.SyncService"
+            android:exported="true"
+            android:process=":sync">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter"/>
+            </intent-filter>
+            <meta-data android:name="android.content.SyncAdapter"
+                android:resource="@xml/syncadapter" />
+        </service>
+    </application>
+</manifest>

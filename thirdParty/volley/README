@@ -1,0 +1,23 @@
+URL: https://android.googlesource.com/platform/frameworks/volley/+/f0bc25d83ddceccd61c2c11a4fa71b9157290363
+
+Version: f0bc25d83ddceccd61c2c11a4fa71b9157290363
+License: Apache 2.0
+License File: LICENSE
+
+Description:
+
+Volley is an HTTP library that makes networking for Android apps easier and most importantly, faster. Volley is available through the open AOSP repository.
+
+Volley offers the following benefits:
+
+* Automatic scheduling of network requests.
+* Multiple concurrent network connections.
+* Transparent disk and memory response caching with standard HTTP cache coherence.
+* Support for request prioritization.
+* Cancellation request API. You can cancel a single request, or you can set blocks or scopes of requests to cancel.
+* Ease of customization, for example, for retry and backoff.
+* Strong ordering that makes it easy to correctly populate your UI with data fetched asynchronously from the network.
+* Debugging and tracing tools.
+
+Local Modifications:
+* Updated build.gradle to work with environment
