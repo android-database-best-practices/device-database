@@ -108,13 +108,16 @@ public class ManufacturerListActivity extends AppCompatActivity implements Loade
         @Override
         public void onBindViewHolder(ManufacturerViewHolder holder, int position) {
             final ContentValues contentValues = new ContentValues();
-
-            if (cursor != null && cursor.moveToPosition(position)) {
-                holder.longNameView.setText(cursor.getString(cursor.getColumnIndexOrThrow(DevicesContract.Manufacturer.LONG_NAME)));
-                holder.shortNameView.setText(cursor.getString(cursor.getColumnIndexOrThrow(DevicesContract.Manufacturer.SHORT_NAME)));
-                holder.uri = ContentUris.withAppendedId(DevicesContract.Manufacturer.CONTENT_URI,
-                        cursor.getLong(cursor.getColumnIndexOrThrow(DevicesContract.Manufacturer._ID)));
+            if (cursor == null) {
+                throw new IllegalStateException("Cursor is null");
             }
+            if (!cursor.moveToPosition(position)) {
+                throw new IllegalStateException("Couldn't move to position " + position);
+            }
+            holder.longNameView.setText(cursor.getString(cursor.getColumnIndexOrThrow(DevicesContract.Manufacturer.LONG_NAME)));
+            holder.shortNameView.setText(cursor.getString(cursor.getColumnIndexOrThrow(DevicesContract.Manufacturer.SHORT_NAME)));
+            holder.uri = ContentUris.withAppendedId(DevicesContract.Manufacturer.CONTENT_URI,
+                    cursor.getLong(cursor.getColumnIndexOrThrow(DevicesContract.Manufacturer._ID)));
         }
 
         @Override
