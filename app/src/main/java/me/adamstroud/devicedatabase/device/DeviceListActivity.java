@@ -310,34 +310,37 @@ public class DeviceListActivity extends AppCompatActivity implements LoaderManag
         @Override
         public void onBindViewHolder(DeviceViewHolder holder,
                                      int position) {
-            if (deviceCursor != null
-                    && deviceCursor.moveToPosition(position)) {
-                String model = deviceCursor
-                        .getString(deviceCursor
-                                .getColumnIndexOrThrow(DevicesContract
-                                        .DeviceManufacturer
-                                        .MODEL));
-
-                int deviceId = deviceCursor
-                        .getInt(deviceCursor
-                                .getColumnIndexOrThrow(DevicesContract
-                                        .DeviceManufacturer
-                                        .DEVICE_ID));
-
-                String shortName = deviceCursor
-                        .getString(deviceCursor
-                                .getColumnIndexOrThrow(DevicesContract
-                                        .DeviceManufacturer
-                                        .SHORT_NAME));
-
-                holder.name.setText(getString(R.string.device_name,
-                        shortName,
-                        model,
-                        deviceId));
-                holder.uri = ContentUris
-                        .withAppendedId(DevicesContract.Device.CONTENT_URI,
-                                        deviceId);
+            if (deviceCursor == null) {
+                throw new IllegalStateException("Cursor is null");
             }
+            if (!deviceCursor.moveToPosition(position)) {
+                throw new IllegalStateException("Couldn't move to position " + position);
+            }
+            String model = deviceCursor
+                    .getString(deviceCursor
+                            .getColumnIndexOrThrow(DevicesContract
+                                    .DeviceManufacturer
+                                    .MODEL));
+
+            int deviceId = deviceCursor
+                    .getInt(deviceCursor
+                            .getColumnIndexOrThrow(DevicesContract
+                                    .DeviceManufacturer
+                                    .DEVICE_ID));
+
+            String shortName = deviceCursor
+                    .getString(deviceCursor
+                            .getColumnIndexOrThrow(DevicesContract
+                                    .DeviceManufacturer
+                                    .SHORT_NAME));
+
+            holder.name.setText(getString(R.string.device_name,
+                    shortName,
+                    model,
+                    deviceId));
+            holder.uri = ContentUris
+                    .withAppendedId(DevicesContract.Device.CONTENT_URI,
+                            deviceId);
         }
 
         @Override
